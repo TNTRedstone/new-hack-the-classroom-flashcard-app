@@ -49,7 +49,7 @@
 	function addOneCardCopy() {
 		cardContainer = document.querySelector("#card-container");
 		filteredcardsList = cardsList.filter(
-			(card) => card.completed === false
+			(card) => card.completed === false && card.groupName == currentGroup
 		);
 		card = filteredcardsList[0];
 		const cardCompoent = new Card({
@@ -75,23 +75,45 @@
 	}
 	let innerGroupSelection;
 	function addCardForm() {
-		cardsList.push({
-			groupName: group,
-			front: front,
-			back: back,
-			completed: false,
-		});
-		const uniqueGroups = new Set();
-		cardsList.forEach((card) => {
-			uniqueGroups.add(card.groupName);
-		});
-		groups = Array.from(uniqueGroups);
-		innerGroupSelection = ""
-		groups.forEach((group) => {
-			innerGroupSelection += `<option value="${group}">${group}</option>`;
-			console.log(innerGroupSelection);
-		});
-		document.querySelector("#groupSelection").innerHTML = innerGroupSelection
+		if (group != "current") {
+			cardsList.push({
+				groupName: group,
+				front: front,
+				back: back,
+				completed: false,
+			});
+			const uniqueGroups = new Set();
+			cardsList.forEach((card) => {
+				uniqueGroups.add(card.groupName);
+			});
+			groups = Array.from(uniqueGroups);
+			innerGroupSelection = "";
+			groups.forEach((group) => {
+				innerGroupSelection += `<option value="${group}">${group}</option>`;
+				console.log(innerGroupSelection);
+			});
+			document.querySelector("#groupSelection").innerHTML =
+				innerGroupSelection;
+		} else {
+			cardsList.push({
+				groupName: currentGroup,
+				front: front,
+				back: back,
+				completed: false,
+			});
+			const uniqueGroups = new Set();
+			cardsList.forEach((card) => {
+				uniqueGroups.add(card.groupName);
+			});
+			groups = Array.from(uniqueGroups);
+			innerGroupSelection = "";
+			groups.forEach((group) => {
+				innerGroupSelection += `<option value="${group}">${group}</option>`;
+				console.log(innerGroupSelection);
+			});
+			document.querySelector("#groupSelection").innerHTML =
+				innerGroupSelection;
+		}
 	}
 	let groups = [];
 
